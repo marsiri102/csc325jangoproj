@@ -1,10 +1,16 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-# Create your views here.
 
 def home(request):
-    return HttpResponse("<h1>Hello, World!</h1><p>Welcome to the Django application.</p>")
+    return HttpResponse("Hello from myapp")
+
 
 def about(request):
-    return HttpResponse("<h1>About Page</h1><p>This is the about page of the Django application.</p>")
+    return HttpResponse("About page")
+
+
+@api_view(['GET'])
+def health(request):
+    return Response({"status": "ok"})
