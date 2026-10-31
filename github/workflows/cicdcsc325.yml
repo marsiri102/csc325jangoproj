@@ -1,31 +1,33 @@
-name: CI/CD Pipeline for CSC325 Django Project
+name: CI/CD Pipeline
 
 on:
-    push:
-        branches:
-            -main
+  push:
+    branches:
+      - main
 
 jobs:
-    build-test-delpoy:
-        runs-on: ubuntu-latest
+  build-test-deploy:
+    runs-on: ubuntu-latest
 
-        steps:
-        -name: Checkout code
-        users: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        -name: set up Python 
-        uses: actopms/setup-python@v2
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-        python-version: '3.8'
-        -name: Install dependencies
-        run: |
-            python -m pip install django
+          python-version: '3.13'
 
-        -name: Run tests
+      - name: Install dependencies
         run: |
-            python manage.py test
+          python -m pip install --upgrade pip
+          python -m pip install django djangorestframework
 
-        -name: Deploy 
+      - name: Run tests
         run: |
-            echo "Deploying the application..."
-            # Add your deployment commands here
+          python manage.py test
+
+      - name: Deploy
+        run: |
+          echo "Deploying the application..."
+          # Add your deployment commands here
